@@ -21,6 +21,20 @@ def calculate_angle(a, b, c):
         angle = 360 - angle
     return angle
 
+def normalize_x(landmark_x):
+    left_hip = landmarks[23]
+    right_hip = landmarks[24]
+    center_x = (left_hip.x + right_hip.x) / 2
+    hip_distance = math.sqrt((right_hip.x - left_hip.x) ** 2 + (right_hip.y - left_hip.y) ** 2)
+    return (landmark_x - center_x) / hip_distance
+
+def normalize_y(landmark_y):
+    left_hip = landmarks[23]
+    right_hip = landmarks[24]
+    center_y = (left_hip.y + right_hip.y) / 2
+    hip_distance = math.sqrt((right_hip.x - left_hip.x) ** 2 + (right_hip.y - left_hip.y) ** 2)
+    return (landmark_y - center_y) / hip_distance
+
 
 pose = mp_pose.Pose(
     static_image_mode = False,
@@ -130,31 +144,31 @@ while True:
             frame_number,
             timestamp,
 
-            left_shoulder.x,
-            left_shoulder.y,
-            left_elbow.x,
-            left_elbow.y,
-            left_wrist.x,
-            left_wrist.y,
-            left_hip.x,
-            left_hip.y,
-            left_knee.x,
-            left_knee.y,
-            left_ankle.x,
-            left_ankle.y,
+            normalize_x(left_shoulder.x),
+            normalize_y(left_shoulder.y),
+            normalize_x(left_elbow.x),
+            normalize_y(left_elbow.y),
+            normalize_x(left_wrist.x),
+            normalize_y(left_wrist.y),
+            normalize_x(left_hip.x),
+            normalize_y(left_hip.y),
+            normalize_x(left_knee.x),
+            normalize_y(left_knee.y),
+            normalize_x(left_ankle.x),
+            normalize_y(left_ankle.y),
 
-            right_shoulder.x,
-            right_shoulder.y,
-            right_elbow.x,
-            right_elbow.y,
-            right_wrist.x,
-            right_wrist.y,
-            right_hip.x,
-            right_hip.y,
-            right_knee.x,
-            right_knee.y,
-            right_ankle.x,
-            right_ankle.y,
+            normalize_x(right_shoulder.x),
+            normalize_y(right_shoulder.y),
+            normalize_x(right_elbow.x),
+            normalize_y(right_elbow.y),
+            normalize_x(right_wrist.x),
+            normalize_y(right_wrist.y),
+            normalize_x(right_hip.x),
+            normalize_y(right_hip.y),
+            normalize_x(right_knee.x),
+            normalize_y(right_knee.y),
+            normalize_x(right_ankle.x),
+            normalize_y(right_ankle.y),
 
             left_elbow_angle,
             right_elbow_angle,
